@@ -263,8 +263,9 @@ class Map(object):
     scenes = {
         'lostdogstart': LostDogStart(),
         'gratefulfamily': GratefulFamily(),
+        'highway': Highway(),
         'bear': Bear(),
-        'foaterhome': FosterHome(),
+        'fosterhome': FosterHome(),
         'veterinarian': Veterinarian(),
         'guidedog': GuideDog(),
         'homeowner': Homeowner(),
