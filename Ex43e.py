@@ -2,6 +2,13 @@ from sys import exit
 from random import randint
 from textwrap import dedent
 
+class Scene(object):
+    
+    def enter(self):
+        print("This scene is not yet configured.") 
+        print("Subclass it and implement enter().") 
+        exit(1)
+
 
 class Engine(object):
 
@@ -10,7 +17,7 @@ class Engine(object):
 
     def play(self):
         current_scene = self.scene_map.opening_scene()
-        last_scene = self.scene_map.next_scene('finished')
+        last_scene = self.scene_map.next_scene('foreverhome')
 
         while current_scene != last_scene:
             next_scene_name = current_scene.enter()
@@ -18,18 +25,6 @@ class Engine(object):
 
         # be sure to print out the last scene
         current_scene.enter()
-
-class ForeverHome(Scene):
-
-    quips = [
-        "Harry has found his forever home!",
-        "Harry has found his forever home!",
-
-        ]
-
-    def enter(self):
-        print(ForeverHome.quips[randint(0, len(self.quips)-1)])
-        exit(1)
 
 
 class LostDogStart(Scene):
@@ -79,7 +74,7 @@ class GratefulFamily(Scene):
             print(dedent("""
                 They are excited that Harry is so friendly. They see he doesn't have a collar,                and takes him home at the end of the picnic. They take Harry to the vet, and he               is not chipped. The family advertises the found dog, but after 2 weeks, nobody                comes forward.
                 """))
-        return 'foreverhome'
+            return 'foreverhome'
 
         elif action == "steal":
             print(dedent("""
@@ -141,17 +136,17 @@ class Veterinarian(Scene):
                 """))
             return 'fosterhome'
 
-            elif action == "friendly":
-                print(dedent("""
-                    The vet is amazed by Harry's great disposition. Harry is sturdy and has a                     great disposition. If Harry's smart, too, he could make a big                                 difference in someone's life.
-                    """))
-                return 'guidedog'
+        elif action == "friendly":
+            print(dedent("""
+                The vet is amazed by Harry's great disposition. Harry is sturdy and has a                     great disposition. If Harry's smart, too, he could make a big                                 difference in someone's life.
+                """))
+            return 'guidedog'
 
-            else:
-                print(dedent("""
-                    That wasn't an option. Try again!
-                    """))
-                return 'veterinarian'
+        else:
+            print(dedent("""
+                That wasn't an option. Try again!
+                """))
+            return 'veterinarian'
 
 class Highway(Scene):
 
@@ -250,20 +245,32 @@ class DogPack(Scene):
                 """))
             return 'dogpack'
 
+class ForeverHome(Scene):
 
+    quips = [
+        "Harry has found his forever home!",
+        "Harry has found his forever home!",
+
+        ]
+
+    def enter(self):
+        print(ForeverHome.quips[randint(0, len(self.quips)-1)])
+        exit(1)
+        
+        
 class Map(object):
 
     scenes = {
-    'lostdogstart': LostDogStart(),
-    'gratefulfamily': GratefulFamily(),
-    'bear': Bear(),
-    'foaterhome': FosterHome(),
-    'veterinarian': Veterinarian(),
-    'guidedog': GuideDog(),
-    'homeowner': Homeowner(),
-    'hitchhiker': Hitchhiker(),
-    'dogpack': Dogpack()
-    'foreverhome': ForeverHome(),
+        'lostdogstart': LostDogStart(),
+        'gratefulfamily': GratefulFamily(),
+        'bear': Bear(),
+        'foaterhome': FosterHome(),
+        'veterinarian': Veterinarian(),
+        'guidedog': GuideDog(),
+        'homeowner': Homeowner(),
+        'hitchhiker': Hitchhiker(),
+        'dogpack': DogPack(),
+        'foreverhome': ForeverHome(),
 
     }
 
